@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detailed Results - COHERENTEYES</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">COHERENTEYES</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html">What is AI Safety?</a></li>
+                <li><a href="index.html">Perils of AI</a></li>
+                <li><a href="index.html">Our Work</a></li>
+                <li><a href="index.html">Careers in AI Safety</a></li>
+                <li><a href="results.html">Detailed Results</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title">Detailed Results & Technical Analysis</h1>
+            <p class="page-subtitle">Comprehensive evaluation of COHERENTEYES fake news detection models using LSTM neural networks</p>
+        </div>
+    </section>
+
+    <!-- Dataset Details Section -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Dataset Specification</h2>
+
+            <div class="dataset-details">
+                <div class="detail-grid">
+                    <div class="detail-item"><strong>Dataset Name:</strong> Real and Fake News Dataset (Kaggle)</div>
+                    <div class="detail-item"><strong>Source:</strong> <a href="https://www.kaggle.com/datasets/razanaqvi14/real-and-fake-newsdata" target="_blank" class="dataset-link">Kaggle Dataset Link</a></div>
+                    <div class="detail-item"><strong>Total Articles:</strong> 44,898</div>
+                    <div class="detail-item"><strong>True.csv:</strong> 21,417 verified news articles from Reuters</div>
+                    <div class="detail-item"><strong>Fake.csv:</strong> 23,481 fabricated news articles from flagged sources</div>
+                    <div class="detail-item"><strong>Training Split:</strong> 80% (35,918 articles)</div>
+                    <div class="detail-item"><strong>Testing Split:</strong> 20% (8,980 articles)</div>
+                    <div class="detail-item"><strong>Features:</strong> Title, Full Text, Subject, Publication Date</div>
+                </div>
+
+                <div class="dataset-rationale-detailed">
+                    <h3>Dataset Rationale</h3>
+                    <p>We selected this dataset because it reflects the real-world landscape of misinformation. In the digital age, fake news doesn't only originate from major outlets but spreads across Google search results, social media platforms, small online magazines, and various websites. These sources often create sensational or fabricated content to attract attention and generate clicks for financial or political gain.</p>
+                    <p>Our dataset includes authentic journalism from Reuters — a trusted international news agency — and fake news from sources flagged by fact-checking organizations like Politifact. This diversity ensures our models are trained to identify misinformation regardless of its source, making them robust and applicable to real-world content moderation and fact-checking scenarios.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Preprocessing Pipeline Section -->
+    <section class="content-section dark-section">
+        <div class="container">
+            <h2 class="section-title">Data Preparation & Processing Pipeline</h2>
+            <p class="intro-text">Effective text preprocessing is critical for training accurate NLP models. Our pipeline transforms raw news article text into clean, structured data suitable for machine learning and deep learning.</p>
+
+            <div class="preprocessing-detailed">
+                <div class="preprocessing-step">
+                    <h3>I. Data Preparation</h3>
+                    <p>We combined the two CSV files (True.csv and Fake.csv) into a single dataset:</p>
+                    <ul>
+                        <li>Loaded and merged both datasets</li>
+                        <li>Added binary labels: 0 for fake news, 1 for real news</li>
+                        <li>Dropped unnecessary columns to focus on text content</li>
+                        <li>Created a balanced dataset for binary classification</li>
+                    </ul>
+                </div>
+
+                <div class="preprocessing-step">
+                    <h3>II. Text Cleaning & Exploratory Data Analysis (EDA)</h3>
+                    <p><strong>Text Cleaning Function:</strong> We developed a comprehensive text cleaning pipeline using NLTK:</p>
+                    <div class="code-block">
+                        <pre><code>import nltk
+nltk.data.path.append('/path/to/nltk_data')
+
+stop_words = set(stopwords.words("english"))
+lemmatizer = WordNetLemmatizer()
+
+def clean_text(text):
+    # Lowercase
+    text = text.lower()
+    # Remove punctuation
+    text = text.translate(str.maketrans('', '', string.punctuation))
+    # Tokenize
+    words = nltk.word_tokenize(text)
+    # Remove stopwords and lemmatize
+    words = [lemmatizer.lemmatize(word) for word in words 
+             if word not in stop_words and word.isalpha()]
+    return " ".join(words)</code></pre>
+                    </div>
+                    <p><strong>Exploratory Analysis:</strong></p>
+                    <ul>
+                        <li>Generated word clouds to visualize most frequent terms in fake vs. real news</li>
+                        <li>Analyzed distribution of news article lengths</li>
+                        <li>Identified linguistic patterns characteristic of each category</li>
+                    </ul>
+                </div>
+
+                <div class="preprocessing-step">
+                    <h3>III. Feature Extraction via TF-IDF Vectorization</h3>
+                    <p>Applied TF-IDF (Term Frequency-Inverse Document Frequency) vectorization to convert text into numerical features:</p>
+                    <ul>
+                        <li>TF-IDF Vectorizer with max_features=5,000</li>
+                        <li>Fit-transform on cleaned text data</li>
+                        <li>Resulting feature matrix: (44,898, 5,000)</li>
+                    </ul>
+                </div>
+
+                <div class="preprocessing-step">
+                    <h3>IV. Train/Test Split</h3>
+                    <p>Divided the dataset into training and testing sets:</p>
+                    <ul>
+                        <li>80% training, 20% testing</li>
+                        <li>Training size: (35,918, 5,000)</li>
+                        <li>Testing size: (8,980, 5,000)</li>
+                        <li>Ensures model generalization and prevents overfitting</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Machine Learning Models Section -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Machine Learning Models: Training & Evaluation</h2>
+            <p class="intro-text">We trained and evaluated four classical machine learning models, each offering unique strengths for text classification. All models were evaluated on the same test set (8,980 articles) for fair comparison.</p>
+
+            <div class="ml-models-detailed">
+                <!-- Logistic Regression -->
+                <div class="model-detail-card">
+                    <h3>1. Logistic Regression</h3>
+                    <p class="model-description">A linear model for binary classification that estimates probabilities using a logistic function. Well-suited for text classification with TF-IDF features.</p>
+
+                    <div class="model-metrics">
+                        <h4>Performance Metrics</h4>
+                        <p class="accuracy-highlight">Accuracy: <strong>98.93%</strong></p>
+                        <table class="metrics-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Precision</th>
+                                    <th>Recall</th>
+                                    <th>F1-Score</th>
+                                    <th>Support</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Fake</strong></td>
+                                    <td>0.99</td>
+                                    <td>0.99</td>
+                                    <td>0.99</td>
+                                    <td>4,677</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Real</strong></td>
+                                    <td>0.99</td>
+                                    <td>0.99</td>
+                                    <td>0.99</td>
+                                    <td>4,303</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p><strong>Confusion Matrix:</strong> Predicted 4,614 Fake correctly (63 misclassified as Real); Predicted 4,270 Real correctly (33 misclassified as Fake)</p>
+                    </div>
+                </div>
+
+                <!-- Naive Bayes -->
+                <div class="model-detail-card">
+                    <h3>2. Naive Bayes</h3>
+                    <p class="model-description">A probabilistic classifier based on Bayes' theorem with strong independence assumptions. Fast and efficient for text classification tasks.</p>
+
+                    <div class="model-metrics">
+                        <h4>Performance Metrics</h4>
+                        <p class="accuracy-highlight">Accuracy: <strong>94.04%</strong></p>
+                        <table class="metrics-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Precision</th>
+                                    <th>Recall</th>
+                                    <th>F1-Score</th>
+                                    <th>Support</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Fake</strong></td>
+                                    <td>0.94</td>
+                                    <td>0.94</td>
+                                    <td>0.94</td>
+                                    <td>4,677</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Real</strong></td>
+                                    <td>0.94</td>
+                                    <td>0.94</td>
+                                    <td>0.94</td>
+                                    <td>4,303</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p><strong>Confusion Matrix:</strong> Predicted 4,417 Fake correctly (260 misclassified as Real); Predicted 4,028 Real correctly (275 misclassified as Fake)</p>
+                    </div>
+                </div>
+
+                <!-- SVM -->
+                <div class="model-detail-card">
+                    <h3>3. Support Vector Machine (SVM)</h3>
+                    <p class="model-description">A powerful kernel-based classifier that finds optimal hyperplanes to separate classes. Highly effective for high-dimensional data like TF-IDF vectors.</p>
+
+                    <div class="model-metrics">
+                        <h4>Performance Metrics</h4>
+                        <p class="accuracy-highlight">Accuracy: <strong>99.51%</strong></p>
+                        <table class="metrics-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Precision</th>
+                                    <th>Recall</th>
+                                    <th>F1-Score</th>
+                                    <th>Support</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Fake</strong></td>
+                                    <td>1.00</td>
+                                    <td>0.99</td>
+                                    <td>1.00</td>
+                                    <td>4,677</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Real</strong></td>
+                                    <td>0.99</td>
+                                    <td>1.00</td>
+                                    <td>0.99</td>
+                                    <td>4,303</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p><strong>Confusion Matrix:</strong> Predicted 4,652 Fake correctly (25 misclassified as Real); Predicted 4,284 Real correctly (19 misclassified as Fake)</p>
+                    </div>
+                </div>
+
+                <!-- Random Forest -->
+                <div class="model-detail-card highlight-model">
+                    <h3>4. Random Forest (Best ML Model)</h3>
+                    <p class="model-description">An ensemble learning method that constructs multiple decision trees and aggregates their predictions. Robust and highly accurate for classification tasks.</p>
+
+                    <div class="model-metrics">
+                        <h4>Performance Metrics</h4>
+                        <p class="accuracy-highlight">Accuracy: <strong>99.78%</strong></p>
+                        <table class="metrics-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Precision</th>
+                                    <th>Recall</th>
+                                    <th>F1-Score</th>
+                                    <th>Support</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Fake</strong></td>
+                                    <td>1.00</td>
+                                    <td>1.00</td>
+                                    <td>1.00</td>
+                                    <td>4,677</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Real</strong></td>
+                                    <td>1.00</td>
+                                    <td>1.00</td>
+                                    <td>1.00</td>
+                                    <td>4,303</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p><strong>Confusion Matrix:</strong> Predicted 4,663 Fake correctly (14 misclassified as Real); Predicted 4,297 Real correctly (6 misclassified as Fake)</p>
+                        <p class="model-insight"><strong>Key Insight:</strong> Random Forest achieved the highest accuracy among all ML models with only 20 total misclassifications out of 8,980 test samples, demonstrating exceptional performance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LSTM Model Section -->
+    <section class="content-section dark-section">
+        <div class="container">
+            <h2 class="section-title">LSTM Deep Learning Model</h2>
+            <p class="intro-text">Long Short-Term Memory (LSTM) networks are a type of Recurrent Neural Network (RNN) designed to capture sequential dependencies in text data. Unlike traditional ML models that treat text as bag-of-words, LSTMs process text sequentially, maintaining context throughout the article.</p>
+
+            <div class="lstm-detailed">
+                <div class="lstm-architecture">
+                    <h3>1. Model Architecture</h3>
+                    <p>We designed an LSTM model using Keras Sequential API:</p>
+                    <div class="code-block">
+                        <pre><code>model = Sequential([
+    Embedding(input_dim=MAX_VOCAB, output_dim=128, input_length=MAX_LEN),
+    LSTM(128, return_sequences=False),
+    Dropout(0.3),
+    Dense(64, activation='relu'),
+    Dropout(0.2),
+    Dense(1, activation='sigmoid')  # binary classification
+])</code></pre>
+                    </div>
+                    <p><strong>Architecture Components:</strong></p>
+                    <ul>
+                        <li><strong>Embedding Layer:</strong> Converts words to 128-dimensional dense vectors</li>
+                        <li><strong>LSTM Layer:</strong> 128 units to capture sequential patterns and long-term dependencies</li>
+                        <li><strong>Dropout (0.3):</strong> Regularization to prevent overfitting after LSTM</li>
+                        <li><strong>Dense Layer:</strong> 64 units with ReLU activation for feature extraction</li>
+                        <li><strong>Dropout (0.2):</strong> Additional regularization before output</li>
+                        <li><strong>Output Layer:</strong> 1 unit with sigmoid activation for binary classification (fake/real)</li>
+                    </ul>
+                </div>
+
+                <div class="lstm-training">
+                    <h3>2. Training Process</h3>
+                    <ul>
+                        <li><strong>Epochs:</strong> 20 epochs with validation monitoring</li>
+                        <li><strong>Optimizer:</strong> Adam optimizer with adaptive learning rate</li>
+                        <li><strong>Loss Function:</strong> Binary crossentropy</li>
+                        <li><strong>Validation Split:</strong> 20% of training data used for validation</li>
+                        <li><strong>Early Stopping:</strong> Monitored validation loss to prevent overfitting</li>
+                    </ul>
+                </div>
+
+                <div class="lstm-training-curves full-width-card">
+                    <h3>3. Training Curves: Accuracy and Loss</h3>
+                    <p>We tracked both training and validation accuracy/loss across 20 epochs to monitor model convergence and detect overfitting:</p>
+                    
+                    <div class="curves-grid-container">
+                        <div class="curve-column">
+                            <div class="curve-text">
+                                <h4>Accuracy Curve</h4>
+                                <p>The model achieved rapid convergence, reaching high training and validation accuracy within the first few epochs. Both curves increased together, indicating good generalization without significant overfitting.</p>
+                            </div>
+                            <div class="curve-image-wrapper">
+                                <img src="LSTM Model Accuracy Plot.png" alt="LSTM Model Accuracy Plot" class="model-plot-img">
+                            </div>
+                        </div>
+                
+                        <div class="curve-column">
+                            <div class="curve-text">
+                                <h4>Loss Curve</h4>
+                                <p>Training and validation loss decreased steadily throughout training, with both curves converging to low values. The close tracking of validation and training loss demonstrates that the model generalized well to unseen data.</p>
+                            </div>
+                            <div class="curve-image-wrapper">
+                                <img src="LSTM Model Loss Plot.png" alt="LSTM Model Loss Plot" class="model-plot-img">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lstm-evaluation">
+                    <h3>4. Model Evaluation on Test Data</h3>
+                    <p class="accuracy-highlight">LSTM Model Accuracy: <strong>99.70%</strong></p>
+
+                    <div class="model-metrics">
+                        <h4>Performance Metrics</h4>
+                        <p><strong>Confusion Matrix:</strong> The LSTM model demonstrated exceptional performance:</p>
+                        <ul>
+                            <li>Predicted 4,694 Fake news correctly (only 2 misclassified as Real)</li>
+                            <li>Predicted 4,279 Real news correctly (only 5 misclassified as Fake)</li>
+                            <li>Total misclassifications: 7 out of 8,980 test samples</li>
+                        </ul>
+                        <p class="model-insight"><strong>Key Insight:</strong> The LSTM model achieved remarkable precision in identifying both fake and real news, with an error rate of only 0.08% — demonstrating the power of sequential processing for fake news detection.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- ML vs DL Comparison Section -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Comprehensive Model Comparison: ML vs DL</h2>
+            <p class="intro-text">Comparing all five models reveals insights into the strengths of traditional machine learning versus deep learning approaches for fake news detection.</p>
+
+            <div class="comprehensive-comparison">
+                <div class="table-container">
+                    <table class="performance-table">
+                        <thead>
+                            <tr>
+                                <th>Model</th>
+                                <th>Type</th>
+                                <th>Accuracy</th>
+                                <th>Precision (Avg)</th>
+                                <th>Recall (Avg)</th>
+                                <th>F1-Score (Avg)</th>
+                                <th>Misclassifications</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="best-model">
+                                <td><strong>Random Forest</strong></td>
+                                <td>ML</td>
+                                <td><strong>99.78%</strong></td>
+                                <td>1.00</td>
+                                <td>1.00</td>
+                                <td>1.00</td>
+                                <td>20</td>
+                            </tr>
+                            <tr class="second-best">
+                                <td><strong>LSTM</strong></td>
+                                <td>DL</td>
+                                <td><strong>99.70%</strong></td>
+                                <td>~0.99</td>
+                                <td>~0.99</td>
+                                <td>~0.99</td>
+                                <td>7</td>
+                            </tr>
+                            <tr>
+                                <td>SVM</td>
+                                <td>ML</td>
+                                <td>99.51%</td>
+                                <td>0.995</td>
+                                <td>0.995</td>
+                                <td>0.995</td>
+                                <td>44</td>
+                            </tr>
+                            <tr>
+                                <td>Logistic Regression</td>
+                                <td>ML</td>
+                                <td>98.93%</td>
+                                <td>0.99</td>
+                                <td>0.99</td>
+                                <td>0.99</td>
+                                <td>96</td>
+                            </tr>
+                            <tr>
+                                <td>Naive Bayes</td>
+                                <td>ML</td>
+                                <td>94.04%</td>
+                                <td>0.94</td>
+                                <td>0.94</td>
+                                <td>0.94</td>
+                                <td>535</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="comparison-insights">
+                    <h3>Key Insights from Comparison</h3>
+
+                    <div class="insight-grid">
+                        <div class="insight-card">
+                            <h4>Top Performers</h4>
+                            <p><strong>Random Forest (99.78%)</strong> and <strong>LSTM (99.70%)</strong> both achieved exceptional performance, demonstrating that both traditional ML ensemble methods and deep learning sequential models can excel at fake news detection.</p>
+                        </div>
+
+                        <div class="insight-card">
+                            <h4>ML Advantages</h4>
+                            <p>Machine learning models (especially Random Forest and SVM) offer:</p>
+                            <ul>
+                                <li>Faster training and inference times</li>
+                                <li>Greater interpretability (feature importance)</li>
+                                <li>Lower computational requirements</li>
+                                <li>Excellent performance with TF-IDF features</li>
+                            </ul>
+                        </div>
+
+                        <div class="insight-card">
+                            <h4>DL Advantages</h4>
+                            <p>Deep learning models (LSTM) offer:</p>
+                            <ul>
+                                <li>Sequential understanding of text</li>
+                                <li>Automatic feature learning (no manual feature engineering)</li>
+                                <li>Better capture of long-range dependencies</li>
+                                <li>Context-aware predictions</li>
+                                <li>Lowest absolute misclassification count (7 errors)</li>
+                            </ul>
+                        </div>
+
+                        <div class="insight-card">
+                            <h4>⚖️ Trade-offs</h4>
+                            <p>The choice between ML and DL depends on deployment scenarios:</p>
+                            <ul>
+                                <li><strong>Choose Random Forest/SVM:</strong> When interpretability, speed, and resource efficiency are priorities</li>
+                                <li><strong>Choose LSTM:</strong> When maximum precision is needed and computational resources are available</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ranking-visualization">
+                    <h3>Model Accuracy Ranking</h3>
+                    <div class="accuracy-bars">
+                        <div class="bar-item">
+                            <span class="bar-label">Random Forest</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 99.78%;"></div>
+                                <span class="bar-value">99.78%</span>
+                            </div>
+                        </div>
+                        <div class="bar-item">
+                            <span class="bar-label">LSTM</span>
+                            <div class="bar-container">
+                                <div class="bar bar-dl" style="width: 99.70%;"></div>
+                                <span class="bar-value">99.70%</span>
+                            </div>
+                        </div>
+                        <div class="bar-item">
+                            <span class="bar-label">SVM</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 99.51%;"></div>
+                                <span class="bar-value">99.51%</span>
+                            </div>
+                        </div>
+                        <div class="bar-item">
+                            <span class="bar-label">Logistic Regression</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 98.93%;"></div>
+                                <span class="bar-value">98.93%</span>
+                            </div>
+                        </div>
+                        <div class="bar-item">
+                            <span class="bar-label">Naive Bayes</span>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 94.04%;"></div>
+                                <span class="bar-value">94.04%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conclusions Section -->
+    <section class="content-section dark-section">
+        <div class="container">
+            <h2 class="section-title">Conclusions & Future Work</h2>
+
+            <div class="conclusions-box">
+                <h3>Summary of Findings</h3>
+                <p>Our comprehensive evaluation demonstrates that both traditional machine learning and deep learning approaches are highly effective for fake news detection. Through systematic experimentation with four ML models and one DL model, we achieved peak accuracies of <strong>99.78% (Random Forest)</strong> and <strong>99.70% (LSTM)</strong>, with balanced precision and recall metrics.</p>
+
+                <p>The baseline Naive Bayes model (94.04% accuracy) established feasibility, while more sophisticated models—Logistic Regression (98.93%), SVM (99.51%), Random Forest (99.78%), and LSTM (99.70%)—demonstrated exceptional performance through different approaches: ensemble learning, kernel methods, and sequential processing.</p>
+
+                <p>Our models successfully minimize both false positives (avoiding censorship) and false negatives (catching misinformation), making them suitable for real-world deployment where both error types carry serious consequences.</p>
+            </div>
+
+            <div class="conclusions-box">
+                <h3>Limitations</h3>
+                <ul>
+                    <li><strong>Language Specificity:</strong> Our models are trained exclusively on English text. Detecting fake news in other languages would require retraining on multilingual datasets or using language-agnostic approaches.</li>
+                    <li><strong>Evolving Misinformation Tactics:</strong> Fake news creators continuously adapt their strategies. Models require regular updates and retraining to maintain effectiveness against novel deception techniques, especially with AI-generated text becoming more sophisticated.</li>
+                    <li><strong>Context Dependence:</strong> Some claims require external knowledge or fact-checking beyond textual analysis alone. Multimodal and knowledge-augmented approaches could improve performance on such cases.</li>
+                    <li><strong>Dataset Bias:</strong> Our models learn patterns from the training data. If fake news patterns evolve or shift to different writing styles, model performance may degrade without continuous updates.</li>
+                    <li><strong>Computational Requirements:</strong> While more efficient than transformer models, LSTM networks still require moderate computational resources for training and ideally GPU acceleration for real-time inference at scale. ML models are more resource-efficient.</li>
+                </ul>
+            </div>
+
+            <div class="conclusions-box">
+                <h3>Future Directions</h3>
+                <ul>
+                    <li><strong>Multimodal Detection:</strong> Integrate image and video analysis with text processing to detect manipulated media (deepfakes, altered photos) alongside textual misinformation. Combine LSTM text analysis with Convolutional Neural Networks (CNNs) for visual content.</li>
+                    <li><strong>Multilingual Support:</strong> Extend the system to detect fake news in multiple languages, particularly those spoken in Southeast Asia (Vietnamese, Thai, Bahasa Indonesia) and other underserved regions. Utilize multilingual BERT models or translation-augmented approaches.</li>
+                    <li><strong>Transformer Models:</strong> Explore state-of-the-art transformer architectures (BERT, RoBERTa, GPT-based models) for even higher accuracy and better contextual understanding, though at higher computational cost.</li>
+                    <li><strong>Adversarial Robustness Testing:</strong> Systematically evaluate model performance against adversarial attacks where bad actors deliberately craft text to fool detection systems. Develop defense mechanisms through adversarial training.</li>
+                    <li><strong>Real-time Deployment Architecture:</strong> Optimize models for production deployment with model compression techniques, caching frequently-analyzed content, load balancing, and continuous monitoring of model performance.</li>
+                    <li><strong>Explainability Features:</strong> Develop interpretability tools that highlight which text features influenced the model's decision (e.g., attention visualization), enabling human fact-checkers to verify results and understand model reasoning.</li>
+                    <li><strong>Cross-platform Integration:</strong> Partner with social media platforms, search engines, and news aggregators to deploy detection at scale. Build APIs and browser extensions for widespread accessibility.</li>
+                    <li><strong>Continual Learning:</strong> Implement online learning pipelines where models can be updated with new data regularly, adapting to evolving misinformation patterns without full retraining.</li>
+                    <li><strong>Hybrid Approaches:</strong> Combine ML/DL models with fact-checking databases, knowledge graphs, and source credibility scoring to create comprehensive misinformation detection systems.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Acknowledgements Section -->
+    <section class="content-section">
+        <div class="container">
+            <h2 class="section-title">Acknowledgements & References</h2>
+
+            <div class="acknowledgements-box">
+                <h3>Acknowledgements</h3>
+                <p>This project builds upon the foundational work of numerous researchers and practitioners in AI Safety, Natural Language Processing, and fake news detection. We are grateful for the open-source community that provides datasets, tools, and frameworks enabling research in this critical area.</p>
+                <p>We acknowledge the contributions of the Kaggle community for curating and sharing the Real and Fake News Dataset, and the researchers at Reuters, Politifact, and other fact-checking organizations whose work enables the creation of labeled datasets for misinformation research.</p>
+            </div>
+
+            <div class="references-box">
+                <h3>References</h3>
+                <div class="reference-list">
+                    <div class="reference-item">
+                        <strong>AI Safety & Governance:</strong>
+                        <ul>
+                            <li>Ryan, M., & Stahl, B. C. (2024). "AI Safety: Definitions and Frameworks." <em>Journal of AI Ethics.</em></li>
+                            <li>OECD. (2024). <em>AI Policy Outlook 2024.</em> Organisation for Economic Co-operation and Development.</li>
+                            <li>OpenAI. (2023). "How we think about safety and alignment." Retrieved from openai.com</li>
+                            <li>UK AI Safety Institute. (2024). <em>AI Safety Guidelines.</em> Department for Science, Innovation and Technology.</li>
+                        </ul>
+                    </div>
+
+                    <div class="reference-item">
+                        <strong>AI Risks & Bias:</strong>
+                        <ul>
+                            <li>Hubinger, E., van Merwijk, C., Mikulik, V., Skalse, J., & Garrabrant, S. (2019). "Risks from Learned Optimization in Advanced Machine Learning Systems." <em>arXiv preprint arXiv:1906.01820.</em></li>
+                            <li>Kodexo Labs. (2025). "Types and Sources of AI Bias." Retrieved from kodexolabs.com</li>
+                            <li>Buolamwini, J., & Gebru, T. (2018). "Gender Shades: Intersectional Accuracy Disparities in Commercial Gender Classification." <em>Proceedings of Machine Learning Research, 81</em>, 1-15.</li>
+                            <li>Goodfellow, I. J., Shlens, J., & Szegedy, C. (2015). "Explaining and Harnessing Adversarial Examples." <em>International Conference on Learning Representations (ICLR).</em></li>
+                        </ul>
+                    </div>
+
+                    <div class="reference-item">
+                        <strong>Misinformation & Fake News:</strong>
+                        <ul>
+                            <li>Vosoughi, S., Roy, D., & Aral, S. (2018). "The spread of true and false news online." <em>Science, 359</em>(6380), 1146-1151.</li>
+                            <li>Naeem, S. B., & Bhatti, R. (2020). "The Covid-19 'infodemic': A new front for information professionals." <em>Frontiers in Public Health, 8</em>, 437.</li>
+                        </ul>
+                    </div>
+
+                    <div class="reference-item">
+                        <strong>Deep Learning & LSTM for Fake News Detection:</strong>
+                        <ul>
+                            <li>Hochreiter, S., & Schmidhuber, J. (1997). "Long Short-Term Memory." <em>Neural Computation, 9</em>(8), 1735-1780.</li>
+                            <li>Syed, A. H., et al. (2023). "Fake News Detection Using Weakly Supervised Learning and Deep Learning Techniques." <em>IEEE Access.</em></li>
+                            <li>Althubiti, S. A., et al. (2022). "Natural Language Processing with Sea Turtle Foraging Optimization-based Deep Learning for Fake News Detection." <em>Computers, Materials & Continua.</em></li>
+                            <li>Ouassil, O., et al. (2022). "Fake News Detection Using Deep Learning: Combining Word Embeddings with CNN and BiLSTM." <em>International Journal of Advanced Computer Science and Applications.</em></li>
+                            <li>Khanam, Z., et al. (2021). "Fake News Detection Using Machine Learning Approaches." <em>IOP Conference Series: Materials Science and Engineering.</em></li>
+                        </ul>
+                    </div>
+
+                    <div class="reference-item">
+                        <strong>Southeast Asia AI Strategies:</strong>
+                        <ul>
+                            <li>Singapore Government. (2023). <em>National AI Strategy 2.0.</em> Smart Nation and Digital Government Office.</li>
+                            <li>Government of Vietnam. (2021). <em>Decision 127/QĐ-TTg: National Strategy on Research, Development and Application of AI to 2030.</em></li>
+                            <li>Government of Vietnam. (2020). <em>Decision 749/QĐ-TTg: National Digital Transformation Program to 2030.</em></li>
+                            <li>Malaysia Government. (2021). <em>National Artificial Intelligence Roadmap 2021-2025.</em> Malaysia Digital Economy Corporation (MDEC).</li>
+                            <li>Indonesia Government. (2020). <em>National Artificial Intelligence Strategy (STRANAS KA).</em> Ministry of Communication and Informatics.</li>
+                        </ul>
+                    </div>
+
+                    <div class="reference-item">
+                        <strong>Dataset:</strong>
+                        <ul>
+                            <li>Raza Naqvi, R. (2024). "Real and Fake News Dataset." <em>Kaggle.</em> Retrieved from <a href="https://www.kaggle.com/datasets/razanaqvi14/real-and-fake-news/data" target="_blank" class="dataset-link">kaggle.com/datasets/razanaqvi14/real-and-fake-news/data</a></li>
+                            <li>Ahmed, H., Traore, I., & Saad, S. (2018). "Detecting opinion spams and fake news using text classification." <em>Security and Privacy, 1</em>(1), e9.</li>
+                        </ul>
+                    </div>
+
+                    <div class="reference-item">
+                        <strong>Implementation Reference:</strong>
+                        <ul>
+                            <li>Yilmaz, M. A. (2023). "Fake News Prediction via NLP and LSTM." <em>Kaggle Notebook.</em> Retrieved from <a href="https://www.kaggle.com/code/muhammedaliyilmazz/fake-news-prediction-via-nlp-and-lstm" target="_blank" class="dataset-link">kaggle.com/code/muhammedaliyilmazz/fake-news-prediction-via-nlp-and-lstm</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Back to Home Section -->
+    <section class="cta-section-full">
+        <div class="container">
+            <a href="index.html" class="cta-button-large">← Back to Home</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p><strong>COHERENTEYES</strong> — An AI Safety Project</p>
+            <p>© 2025 COHERENTEYES. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
