@@ -3,427 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>COHERENTEYES - AI Safety & Fake News Detection</title>
+    <title>COHERENTEYES - Home</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Navigation -->
+
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">COHERENTEYES</div>
+            <a href="index.html" class="logo">COHERENTEYES</a>
+            
+            <div class="menu-toggle">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+
             <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#ai-safety">What is AI Safety?</a></li>
-                <li><a href="#perils">Perils of AI</a></li>
-                <li><a href="#our-work">Our Work</a></li>
-                <li><a href="#careers">Careers in AI Safety</a></li>
-                <li><a href="results.html">Detailed Results</a></li>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="definition.html">What is AI Safety?</a></li>
+                <li><a href="perils.html">Perils of AI</a></li>
+                <li><a href="careers.html">Careers</a></li>
+                <li><a href="work.html">Our Work</a></li>
             </ul>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
+    <section class="hero">
         <div class="hero-content">
             <h1 class="hero-title">COHERENTEYES</h1>
-            <p class="hero-subtitle">AI Safety Through Fake News Detection</p>
+            <p class="hero-subtitle">Freedom from unacceptable risk.</p>
             <p class="hero-tagline">Advancing information integrity in the age of AI-generated misinformation</p>
-        </div>
-        <div class="scroll-indicator">↓</div>
-    </section>
 
-    <!-- What Is AI Safety Section -->
-    <section id="ai-safety" class="content-section">
-        <div class="container">
-            <h2 class="section-title">What Is AI Safety?</h2>
-            <p class="intro-text">Artificial Intelligence (AI) now shapes nearly every domain of human activity — from medicine and education to finance and national security. Yet as these systems grow more capable, the question arises: how can we ensure that they remain safe, reliable, and aligned with human values?</p>
-
-            <div class="definition-box">
-                <p><strong>AI Safety</strong> is the scientific and engineering discipline devoted to designing, testing, and governing AI systems to prevent unintended or harmful outcomes. As defined by Ryan & Stahl (2024), AI safety means <em>"freedom from unacceptable risk of harm caused by the use of AI."</em></p>
-            </div>
-
-            <div class="principles-grid">
-                <div class="principle-card">
-                    <h3>Robustness</h3>
-                    <p>AI systems must perform reliably under real-world uncertainty and edge cases</p>
-                </div>
-                <div class="principle-card">
-                    <h3>Interpretability</h3>
-                    <p>Human operators must be able to understand and audit AI behavior</p>
-                </div>
-                <div class="principle-card">
-                    <h3>Alignment</h3>
-                    <p>AI objectives must align with ethical, legal, and social norms</p>
-                </div>
-            </div>
-
-            <p class="closing-text">AI Safety is not merely a technical challenge. It is a socio-technical field at the intersection of computer science, ethics, law, and governance — recognized by organizations such as OECD, OpenAI, and the UK AI Safety Institute.</p>
-        </div>
-    </section>
-
-    <!-- Perils of AI Section (Horizontal Layout with Images) -->
-    <section id="perils" class="content-section dark-section">
-        <div class="container">
-            <h2 class="section-title">The Perils of AI: Why We Need AI Safety</h2>
-            <p class="intro-text">AI systems promise extraordinary societal benefits — but without robust safety mechanisms, they can also magnify harm. This section highlights key categories of AI risk with real-world examples and scientific evidence.</p>
-
-            <!-- Peril 1: Autonomy Without Alignment -->
-            <div class="peril-horizontal">
-            <div class="peril-content">
-                    <h3>Autonomy Without Alignment</h3>
-                    <p class="peril-description">Highly capable systems can act in ways not anticipated by their designers. Reinforcement-learning agents, when given flawed objectives, can exploit reward functions to achieve goals misaligned with human intent (Hubinger et al., 2019).</p>
-                    <div class="peril-example">
-                        <strong>Real-World Example:</strong> Even large language models have exhibited emergent "goal-pursuing" behavior, producing toxic or manipulative responses as seen in the "Sydney" incident with Microsoft Bing.
-                    </div>
-                    <p class="peril-insight">These examples underscore the need for value-alignment research — ensuring that AI objectives match human values.</p>
-                </div>
-            </div>
-
-            <!-- Peril 2: Bias and Fairness -->
-            <div class="peril-horizontal reverse">
-                <div class="peril-content">
-                    <h3>Bias and Fairness</h3>
-                    <p class="peril-description">Bias in artificial-intelligence systems occurs when machine-learning algorithms produce systematically prejudiced results that disadvantage particular groups. This problem stems from skewed training data, flawed model design, or implicit assumptions introduced during development. Unlike human bias, which may be inconsistent, algorithmic bias operates at scale, replicating unfair decisions across thousands or millions of users simultaneously.</p>
-                    <div class="peril-stats">
-                        <strong>Critical Statistics:</strong> Commercial facial-recognition systems show error rates up to 34% higher for darker-skinned women than for lighter-skinned men (Kodexo Labs, 2025). MIT's Gender Shades project found that Amazon Rekognition, IBM Watson Visual Recognition, and Microsoft Face API missed as many as 37% of darker-skinned female faces.
-                    </div>
-                    <div class="sectors-affected">
-                        <strong>Sectors Affected:</strong>
-                        <ul>
-                            <li><strong>Healthcare:</strong> Diagnostic algorithms trained primarily on lighter-skinned or male patient data underperform for minority or female populations</li>
-                            <li><strong>Finance:</strong> Automated lending models charge Black and Latino borrowers higher interest rates even when creditworthiness is equal</li>
-                            <li><strong>Hiring:</strong> Resume-screening AI has replicated historical gender bias by down-ranking women's CVs in technical roles</li>
-                        </ul>
-                    </div>
-                    <div class="bias-types">
-                        <strong>Types of AI Bias (Kodexo Labs, 2025):</strong> Sampling bias (unrepresentative training data), Selection bias (systematic exclusion of certain groups), Measurement bias (inconsistent or culturally skewed data collection), Confirmation bias (developer assumptions reinforcing existing patterns)
-                    </div>
-                    
-                    <div class="peril-visual" style="margin-top: 1.5rem; width: 100%;">
-                        <img src="Bias and Fairness.png" 
-                             alt="Diagram illustrating types of AI Bias" 
-                             style="width: 100%; height: auto; border-radius: 10px; border: 1px solid rgba(0, 255, 65, 0.3); box-shadow: 0 5px 15px rgba(0,0,0,0.5);">
-                    </div>
-                </div></div>
-
-            <!-- Peril 3: Security and Control -->
-            <div class="peril-horizontal">
-            <div class="peril-content">
-                    <h3>Security and Control</h3>
-                    <p class="peril-description">AI systems are vulnerable to adversarial manipulation, data poisoning, and model-exfiltration attacks. As models are deployed at scale, safety intersects with cybersecurity: a manipulated or hijacked AI can cause large-scale harm (Goodfellow et al., 2015).</p>
-                    <p class="peril-insight">Safety engineers must therefore consider adversarial robustness and secure alignment as integral parts of design.</p>
-                </div>
-            </div>
-
-            <!-- Peril 4: Information Integrity -->
-            <div class="peril-horizontal highlighted-peril-horizontal">
-            <div class="peril-content">
-                    <h3>Information Integrity: The Misinformation Crisis</h3>
-                    <p class="peril-description">Perhaps the most visible societal peril is the use of AI to create or spread misinformation.</p>
-                    <div class="peril-stats">
-                        <strong>Critical Statistics:</strong> Studies show that false news spreads six times faster than truth on social networks (Vosoughi et al., Science, 2018).
-                    </div>
-                    <div class="peril-example">
-                        <strong>Real Impact:</strong> During COVID-19, misinformation directly undermined public-health interventions (Naeem & Bhatti, Front. Public Health, 2020). Some false remedies led to hundreds of deaths.
-                    </div>
-                    <p class="peril-description"><strong>Modern Challenge:</strong> Generative models now accelerate this problem by producing realistic fake text, images, and voices.</p>
-                    <div class="connection-box">
-                        <strong>Connection to Our Work:</strong> Combating this phenomenon demands robust AI safety research in misinformation detection, transparency, and content authentication — precisely the domain of our current work.
-                    </div>
-                </div></div>
-        </div>
-    </section>
-
-    <!-- Our Work Section -->
-    <section id="our-work" class="content-section">
-        <div class="container">
-            <h2 class="section-title">Our Work</h2>
-
-            <p class="intro-text">As part of our commitment to AI Safety, we developed <strong>COHERENTEYES</strong> — a comprehensive fake news detection system that leverages machine learning and deep learning techniques to combat misinformation at scale.</p>
-
-            <div class="work-subsection">
-                <h3>Project Overview</h3>
-                <p>The proliferation of fake news poses a critical threat to information integrity, democratic processes, and public trust. Our project addresses this challenge by training and evaluating multiple machine learning and deep learning models on a comprehensive fake news dataset, comparing their effectiveness in distinguishing authentic journalism from fabricated content.</p>
-            </div>
-
-            <div class="work-subsection">
-                <h3>Dataset Rationale</h3>
-                <p>We utilized a <strong>Real and Fake News Dataset</strong> from Kaggle, comprising two distinct CSV files:</p>
-                <ul class="dataset-list">
-                    <li><strong>True.csv:</strong> 21,417 verified news articles from trusted sources like Reuters</li>
-                    <li><strong>Fake.csv:</strong> 23,481 fabricated news articles from flagged sources</li>
-                </ul>
-                <p><strong>Total Articles:</strong> 44,898 articles with balanced representation</p>
-                <p><strong>Features:</strong> Each article includes title, full text, subject category, and publication date</p>
-
-                <div class="dataset-rationale">
-                    <h4>Why We Chose This Dataset</h4>
-                    <p>In the digital age, misinformation doesn't just come from major media outlets. Apart from official news sources, there are countless fake and fabricated news articles posted on Google search results, social media platforms, small online magazines, and various websites. These are often created to attract attention, generate clicks, and spread disinformation for financial or political gain. Our chosen dataset reflects this reality by including diverse sources of both authentic journalism from Reuters and fake news from various unreliable outlets flagged by fact-checking organizations like Politifact. This diversity makes our models more robust and applicable to real-world scenarios where misinformation can originate from any corner of the internet.</p>
-                </div>
-            </div>
-
-            <div class="work-subsection">
-                <h3>Methodology</h3>
-                <p>Our methodology involved rigorous data preparation, feature extraction, and comprehensive model development:</p>
-
-                <div class="methodology-steps">
-                    <div class="method-step">
-                        <h4>1. Data Preparation</h4>
-                        <ul>
-                            <li>Combined True.csv and Fake.csv datasets</li>
-                            <li>Dropped unnecessary columns</li>
-                            <li>Created balanced dataset for binary classification</li>
-                        </ul>
-                    </div>
-
-                    <div class="method-step">
-                        <h4>2. Text Cleaning & Exploratory Data Analysis</h4>
-                        <ul>
-                            <li>Text cleaning: lowercase conversion, punctuation removal, tokenization</li>
-                            <li>Stop words removal using NLTK</li>
-                            <li>Lemmatization to reduce words to root forms</li>
-                            <li>Word cloud generation to visualize common terms</li>
-                            <li>Analysis of news length distribution</li>
-                        </ul>
-                    </div>
-
-                    <div class="method-step">
-                        <h4>3. Feature Extraction & TF-IDF Vectorization</h4>
-                        <ul>
-                            <li>Applied TF-IDF (Term Frequency-Inverse Document Frequency) vectorization</li>
-                            <li>Fit-transform on cleaned text to convert to numerical features</li>
-                            <li>Maximum features: 5,000</li>
-                        </ul>
-                    </div>
-
-                    <div class="method-step">
-                        <h4>4. Train/Test Split</h4>
-                        <ul>
-                            <li>80% training, 20% testing</li>
-                            <li>Training size: (35,918, 5,000)</li>
-                            <li>Testing size: (8,980, 5,000)</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="work-subsection">
-                <h3>Models Developed & Results</h3>
-                <p>We implemented and evaluated four machine learning models and one deep learning model, achieving remarkable accuracy across all approaches:</p>
-
-                <div class="models-progression">
-                    <div class="model-progress-card">
-                        <h4>Naive Bayes</h4>
-                        <p>Baseline probabilistic classifier for text classification</p>
-                        <p class="model-accuracy">Accuracy: <strong>94.04%</strong></p>
-                        <ul>
-                            <li>Precision: 0.94 (both Fake and Real)</li>
-                            <li>Recall: 0.94 (both Fake and Real)</li>
-                            <li>F1-Score: 0.94</li>
-                        </ul>
-                    </div>
-
-                    <div class="model-progress-card">
-                        <h4>Logistic Regression</h4>
-                        <p>Linear model for binary classification with regularization</p>
-                        <p class="model-accuracy">Accuracy: <strong>98.93%</strong></p>
-                        <ul>
-                            <li>Precision: 0.99 (both Fake and Real)</li>
-                            <li>Recall: 0.99 (both Fake and Real)</li>
-                            <li>F1-Score: 0.99</li>
-                        </ul>
-                    </div>
-
-                    <div class="model-progress-card">
-                        <h4>Support Vector Machine (SVM)</h4>
-                        <p>Kernel-based classifier optimized for high-dimensional data</p>
-                        <p class="model-accuracy">Accuracy: <strong>99.51%</strong></p>
-                        <ul>
-                            <li>Precision: 1.00 (Fake), 0.99 (Real)</li>
-                            <li>Recall: 0.99 (Fake), 1.00 (Real)</li>
-                            <li>F1-Score: 1.00 (Fake), 0.99 (Real)</li>
-                        </ul>
-                    </div>
-
-                    <div class="model-progress-card">
-                        <h4>Random Forest</h4>
-                        <p>Ensemble learning method using multiple decision trees</p>
-                        <p class="model-accuracy">Accuracy: <strong>99.78%</strong></p>
-                        <ul>
-                            <li>Precision: 1.00 (both Fake and Real)</li>
-                            <li>Recall: 1.00 (both Fake and Real)</li>
-                            <li>F1-Score: 1.00</li>
-                        </ul>
-                    </div>
-
-                    <div class="model-progress-card best-model-card">
-                        <h4>LSTM (Long Short-Term Memory)</h4>
-                        <p>Deep learning model with sequential processing and memory cells</p>
-                        <p class="model-accuracy">Accuracy: <strong>99.70%</strong></p>
-                        <p><strong>Architecture:</strong></p>
-                        <ul>
-                            <li>Embedding layer (MAX_VOCAB, 128 dimensions)</li>
-                            <li>LSTM layer (128 units, return_sequences=False)</li>
-                            <li>Dropout (0.3)</li>
-                            <li>Dense layer (64 units, ReLU activation)</li>
-                            <li>Dropout (0.2)</li>
-                            <li>Output layer (1 unit, sigmoid activation)</li>
-                        </ul>
-                        <p><strong>Training:</strong> 20 epochs with validation monitoring</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="work-subsection">
-                <h3>Results: Key Findings</h3>
-                <p>Our systematic experimentation revealed exceptional performance across all models:</p>
-
-                <div class="results-highlight">
-                    <div class="result-box">
-                        <h4>Machine Learning Excellence</h4>
-                        <p>All traditional ML models achieved over <strong>94% accuracy</strong>, with Random Forest leading at <strong>99.78%</strong>, demonstrating that classical approaches remain highly effective for fake news detection when combined with proper feature engineering.</p>
-                    </div>
-
-                    <div class="result-box">
-                        <h4>Deep Learning Performance</h4>
-                        <p>The LSTM model achieved <strong>99.70% accuracy</strong>, showcasing the power of sequential processing and memory mechanisms in capturing linguistic patterns characteristic of fake versus real news.</p>
-                    </div>
-
-                    <div class="result-box transformer-result">
-                        <h4>Comparative Analysis</h4>
-                        <p>Our comprehensive comparison reveals that both traditional ML (Random Forest: 99.78%) and deep learning (LSTM: 99.70%) approaches can achieve near-perfect performance. The choice between them depends on deployment requirements: Random Forest offers faster inference and interpretability, while LSTM provides better handling of sequential dependencies and context.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="work-subsection">
-                <h3>Understanding the Metrics</h3>
-                <p>Our evaluation uses four key performance metrics to ensure comprehensive model assessment:</p>
-
-                <div class="metrics-grid">
-                    <div class="metric-card">
-                        <h4>Accuracy</h4>
-                        <p>The percentage of correct predictions (both real and fake news correctly identified). Our models achieved 94-99.78% accuracy, meaning they correctly classified 94-99.78 out of every 100 articles.</p>
-                    </div>
-
-                    <div class="metric-card">
-                        <h4>Precision</h4>
-                        <p>Of all articles our models flagged as fake, what percentage were actually fake? High precision means fewer false alarms and avoids censoring legitimate news.</p>
-                    </div>
-
-                    <div class="metric-card">
-                        <h4>Recall</h4>
-                        <p>Of all actual fake news articles, what percentage did we successfully detect? High recall means we catch more misinformation and protect the public effectively.</p>
-                    </div>
-
-                    <div class="metric-card">
-                        <h4>F1-Score</h4>
-                        <p>The harmonic mean of precision and recall, providing a single balanced metric. A high F1-score means our models achieve optimal balance between catching fake news and avoiding false accusations.</p>
-                    </div>
-                </div>
-
-                <p class="metrics-conclusion">These metrics collectively demonstrate that our models not only achieve high overall accuracy but maintain strong performance in both detecting misinformation (recall) and avoiding false positives (precision) — critical for real-world deployment where both types of errors carry significant consequences.</p>
-            </div>
-
-            <div class="cta-section">
-                <a href="results.html" class="cta-button">Explore Detailed Results & Model Analysis</a>
-                <p class="cta-description">View comprehensive performance metrics, confusion matrices, training curves, and technical implementation details</p>
+            <!-- NEW BUTTONS SECTION -->
+            <div class="hero-buttons">
+                <a href="definition.html" class="btn-secondary">What Is AI Safety?</a>
+                <a href="perils.html" class="btn-secondary">Perils of AI</a>
+                <a href="careers.html" class="btn-secondary">Careers in AI Safety</a>
+                <a href="work.html" class="btn-secondary">Our Work</a>
             </div>
         </div>
     </section>
 
-    <section id="careers" class="content-section dark-section">
-        <div class="container">
-            <h2 class="section-title">Careers in AI Safety</h2>
-
-            <p class="intro-text">AI Safety is rapidly becoming one of the world's most critical and interdisciplinary fields — combining computer science, machine learning, philosophy, law, and policy. According to the OECD AI Policy Outlook (2024), the demand for AI safety professionals has more than tripled since 2022, as governments and corporations race to ensure that intelligent systems behave predictably and ethically.</p>
-
-            <div class="career-subsection">
-                <h3>Why the World Needs More AI Safety Engineers</h3>
-                <div class="career-reasons-grid">
-                    <div class="career-reason-card">
-                        <h4>Scale of Impact</h4>
-                        <p>AI systems influence billions of users daily — even minor misalignments can have global consequences.</p>
-                    </div>
-                    <div class="career-reason-card">
-                        <h4>Emergent Complexity</h4>
-                        <p>As models reach billions of parameters, interpretability and verification require dedicated safety research.</p>
-                    </div>
-                    <div class="career-reason-card">
-                        <h4>Regulatory Momentum</h4>
-                        <p>The EU AI Act (2024) and U.S. Executive Order on AI (2023) both mandate risk-management frameworks, creating institutional demand for safety expertise.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="career-subsection">
-                <h3>AI Safety in Southeast Asia</h3>
-                <p>Southeast Asia is emerging as one of the most dynamic regions for artificial intelligence adoption — and with that comes a growing recognition of the need for AI safety, governance, and responsible innovation. While the field is still developing, governments, universities, and industry actors across the region are beginning to embed safety and ethics into their AI strategies.</p>
-
-                <div class="regional-leaders">
-                    <div class="region-card">
-                        <h4>Singapore: Regional Leader in AI Governance</h4>
-                        <p>Singapore has positioned itself as the regional frontrunner in responsible AI. The <strong>AI Verify Foundation</strong>, launched in 2023, operates the world's first open-source AI governance testing framework. It enables developers and auditors to assess models for transparency, fairness, and robustness.</p>
-                        <p>The <strong>National AI Strategy 2.0 (2023)</strong> explicitly emphasizes trusted, human-centric AI and outlines workforce development for AI safety, auditing, and governance. These initiatives make Singapore a central hub for safety researchers, policymakers, and engineers across ASEAN.</p>
-                    </div>
-
-                    <div class="region-card">
-                        <h4>Vietnam: Building Foundations for Safe AI</h4>
-                        <p>Vietnam's AI ecosystem is rapidly expanding, supported by clear national direction. The <strong>National Strategy on Research, Development and Application of Artificial Intelligence to 2030 (Decision 127/QĐ-TTg, 2021)</strong> sets the goal for Vietnam to rank among the top 4 in ASEAN and top 50 globally in AI research and application. It highlights ethical, safe, and responsible AI development as a guiding principle.</p>
-                        <p>The <strong>National Digital Transformation Program to 2030 (Decision 749/QĐ-TTg, 2020)</strong> outlines a national framework for data security, trust, and human-centered digital innovation. Institutions such as Vietnam National University, FPT University, and VinAI Research are incorporating AI ethics, data governance, and responsible innovation into training and research collaborations.</p>
-                    </div>
-
-                    <div class="region-card">
-                        <h4>Malaysia and Indonesia: Embedding Trustworthy AI into Policy</h4>
-                        <p>Malaysia's <strong>National Artificial Intelligence Roadmap (2021-2025)</strong> identifies responsible and ethical AI as a national pillar, with the Malaysia Digital Economy Corporation (MDEC) coordinating standards and industry partnerships.</p>
-                        <p>Indonesia's <strong>National Artificial Intelligence Strategy (STRANAS KA, 2020)</strong> prioritizes AI for human welfare and calls for developing national guidelines for data governance, transparency, and social accountability. Both countries are supporting AI safety research through public-private partnerships and collaborations with ASEAN institutions.</p>
-                    </div>
-                </div>
-
-                <div class="outlook-box">
-                    <h4>Outlook</h4>
-                    <p>Southeast Asia offers a unique opportunity to build AI safety capacity early, aligning rapid technological growth with robust governance. As countries scale AI deployment in government, healthcare, education, and media, the region will need specialists who combine technical expertise with policy and ethical insight.</p>
-                    <p>For emerging engineers and researchers, ASEAN represents not just a fast-growing AI market but a <strong>frontier for safe, trustworthy, and human-centered AI</strong>.</p>
-                </div>
-            </div>
-
-            <div class="career-subsection">
-                <h3>Pathways and Specializations</h3>
-                <div class="career-paths-table">
-                    <table class="pathways-table">
-                        <thead>
-                            <tr>
-                                <th>Domain Focus</th>
-                                <th>Example Roles</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><strong>Technical Safety Research</strong><br>Robustness, interpretability, adversarial defense</td>
-                                <td>ML Safety Researcher, Reliability Engineer</td>
-                            </tr>
-                            <tr>
-                                <td><strong>AI Governance & Policy</strong><br>Risk frameworks, compliance, standards</td>
-                                <td>Policy Analyst, Ethics Advisor</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Misinformation & Integrity</strong><br>Detection models, trust systems</td>
-                                <td>Data Scientist, Content Safety Engineer</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Alignment & Human Feedback</strong><br>RLHF, scalable oversight</td>
-                                <td>Alignment Researcher, Human-in-the-Loop Designer</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <p class="closing-text">Globally and regionally, AI Safety is becoming one of the most interdisciplinary and future-secure career paths. Experts who combine technical skill with ethical and policy insight will be central to building trustworthy AI across ASEAN and beyond.</p>
-        </div>
-    </section>
-
-    <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <p><strong>COHERENTEYES</strong> — An AI Safety Project</p>
