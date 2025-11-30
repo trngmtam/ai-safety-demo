@@ -172,6 +172,35 @@ html {
 
 /* Mobile adjustment for buttons */
 @media (max-width: 768px) {
+    /* 1. Shrink the massive title so it fits on screen */
+    .hero-title {
+        font-size: 2.5rem; /* Reduced from 4.5rem */
+        word-wrap: break-word; /* Ensures text breaks if it's still too long */
+        padding: 0 10px; /* Small safe zone on left/right */
+    }
+
+    /* 2. Adjust subtitle size */
+    .hero-subtitle {
+        font-size: 1.3rem; /* Reduced from 1.8rem */
+        margin-bottom: 1.5rem;
+        padding: 0 1rem;
+    }
+
+    /* 3. Adjust tagline size and spacing */
+    .hero-tagline {
+        font-size: 1rem;
+        padding: 0 1rem;
+        line-height: 1.6;
+    }
+
+    /* 4. Ensure the container doesn't overflow */
+    .hero-content {
+        width: 100%;
+        max-width: 100%;
+        padding: 0 1rem; /* Ensures that "equal space" from left and right you asked for */
+        overflow-x: hidden; /* Prevents horizontal scroll bars */
+    }
+
     .hero-buttons {
         flex-direction: column;
         grid-template-columns: 1fr;
@@ -262,7 +291,7 @@ html {
     text-align: center;
     transition: all 0.3s ease;
 
-    /* FOR VERTICAL CENTERING: */
+    /* Vertical centering */
     display: flex;
     flex-direction: column;
     justify-content: center; /* Pushes content to the vertical center */
@@ -381,6 +410,18 @@ html {
     margin-bottom: 0.8rem;
 }
 
+/* --- Force 2-Column Grid (2x2 Layout) --- */
+.grid-2-col {
+    grid-template-columns: repeat(2, 1fr) !important;
+}
+
+/* Ensure it still stacks into 1 column on mobile phones */
+@media (max-width: 768px) {
+    .grid-2-col {
+        grid-template-columns: 1fr !important;
+    }
+}
+
 .regional-leaders {
     margin: 2rem 0;
 }
@@ -423,40 +464,6 @@ html {
     color: #00ff41;
     font-size: 1.4rem;
     margin-bottom: 1rem;
-}
-
-.career-paths-table {
-    margin: 2rem 0;
-}
-
-.pathways-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #1a1a1a;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.pathways-table thead {
-    background: rgba(0, 255, 65, 0.1);
-}
-
-.pathways-table th {
-    padding: 1.2rem;
-    text-align: left;
-    color: #00ff41;
-    font-weight: 700;
-    border-bottom: 2px solid rgba(0, 255, 65, 0.3);
-}
-
-.pathways-table td {
-    padding: 1rem 1.2rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    line-height: 1.6;
-}
-
-.pathways-table tbody tr:hover {
-    background: rgba(0, 255, 65, 0.05);
 }
 
 /* Footer */
@@ -791,7 +798,7 @@ html {
     }
 }
 
-/* Styling for links inside captions */
+/* Styling for hyperlinks */
 .caption-link {
     color: #b0b0b0;          /* Matches your caption text color */
     text-decoration: underline;
@@ -804,7 +811,7 @@ html {
     text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
 }
 
-/* --- DEFINITION TOOLTIPS (MOBILE FRIENDLY) --- */
+/* --- DEFINITION TOOLTIPS --- */
 
 .term-trigger {
     position: relative;
@@ -820,7 +827,7 @@ html {
 .term-trigger:focus { /* Adds support for Tapping on Mobile */
     color: #00ff41;
     text-shadow: 0 0 8px rgba(0, 255, 65, 0.4);
-    outline: none; /* Removes the ugly blue border on some phones */
+    outline: none; /* Removes the blue border on some phones */
 }
 
 /* The hidden panel */
