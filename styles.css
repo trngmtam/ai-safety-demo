@@ -175,7 +175,7 @@ html {
     /* 1. Shrink the massive title so it fits on screen */
     .hero-title {
         font-size: 11vw; /* Reduced from 4.5rem */
-        padding: 0 10px; /* Small safe zone on left/right */
+        padding: 0 5px; /* Small safe zone on left/right */
         
         white-space: nowrap; /* Force it to stay on one line */
         word-wrap: normal; /* Remove the break-word rule */
