@@ -172,27 +172,16 @@ html {
 
 /* Mobile adjustment for buttons */
 @media (max-width: 768px) {
-    /* 1. Shrink the massive title so it fits on screen */
     .hero-title {
-        font-size: 11vw; /* Reduced from 4.5rem */
-        padding: 0 5px; /* Small safe zone on left/right */
-        
-        white-space: nowrap; /* Force it to stay on one line */
-        word-wrap: normal; /* Remove the break-word rule */
+        font-size: 3rem;
     }
 
-    /* 2. Adjust subtitle size */
     .hero-subtitle {
-        font-size: 1.3rem; /* Reduced from 1.8rem */
-        margin-bottom: 1.5rem;
-        padding: 0 1rem;
+        font-size: 1.4rem;
     }
 
-    /* 3. Adjust tagline size and spacing */
     .hero-tagline {
         font-size: 1rem;
-        padding: 0 1rem;
-        line-height: 1.6;
     }
 
     /* 4. Ensure the container doesn't overflow */
